@@ -15,6 +15,9 @@ interface State {
   public_repos: string;
   followers: string;
   following: string;
+  _id:string;
+  usersS:any;
+  age:string;
 }
 
 class App extends React.Component<any, State> {
@@ -30,7 +33,10 @@ class App extends React.Component<any, State> {
       public_repos: "",
       followers: "",
       following: "",
-      bites: []
+      bites: [],
+      _id: "",
+      age: "",
+      usersS: [],
     };
   }
 
@@ -60,12 +66,10 @@ class App extends React.Component<any, State> {
       .then(response => response.json())
       .then(bites => this.setState({ bites: bites.slice(0, 16) }));
   };
-  private favourites = (favourites: string) => {
-    fetch(`http://localhost:5000`).then(function(response) {
-      response.json().then(function(data) {
-        console.log("favourites", favourites);
-      });
-    });
+  private users = (users: string) => {
+    fetch(`http://localhost:5000/api/${users}`) 
+    .then(response => response.json())
+    .then(usersS => this.setState({ usersS: usersS }));
   };
   render() {
     console.log(this.state);
